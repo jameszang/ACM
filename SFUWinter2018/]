@@ -1,0 +1,45 @@
+#include <iostream>
+#include <map>
+#include <cmath>
+
+using namespace std;
+
+#define nl '\n'
+
+long long f(long long n) {
+    if (n <= 1) {
+        return 1;
+    }
+    return fib(log2(n) - 1) + f(n - log2(n));
+}
+
+long long fib(int n) {
+    static map<int, long long> data = { {1, 1} , {2, 1} };
+
+    auto it = data.find(n);
+    if (it != data.end()) {
+        return it->second;
+    } else {
+        long long val = fib(n-1) + fib(n-2);
+        data[n] = val;
+        return val;
+    }
+}
+
+long long log2(long long n) {
+    return floor(log(n) / log(2));
+}
+
+
+int main() {
+    int T;
+    cin >> T;
+
+    for (int t = 0; t < T; t++) {
+        long long l, r;
+        cin >> l >> r;
+
+        cout << f(r) - f(l) << nl; 
+    }
+    return 0;
+}
